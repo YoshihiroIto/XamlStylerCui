@@ -1,0 +1,3 @@
+[submodule "XamlStyler"]
+	path = XamlStyler
+	url = git@github.com:NicoVermeir/XamlStyler.git
