@@ -2,3 +2,4 @@
 XamlStylerConsole/bin
 XamlStylerConsole/.vs
 XamlStylerConsole/packages
+*.user
