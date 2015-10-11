@@ -1,5 +1,4 @@
-*.
 XamlStylerCui/bin
-XamlStylerCui/.vs
-XamlStylerCui/packages
+.vs
+packages
 *.user
