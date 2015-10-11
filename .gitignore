@@ -1,5 +1,5 @@
 *.
-XamlStylerConsole/bin
-XamlStylerConsole/.vs
-XamlStylerConsole/packages
+XamlStylerCui/bin
+XamlStylerCui/.vs
+XamlStylerCui/packages
 *.user

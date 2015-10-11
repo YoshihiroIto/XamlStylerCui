@@ -3,12 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlStylerConsole", "XamlStylerConsole.csproj", "{63711DDE-2464-466F-B374-ABD69EEB5AE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlStylerCui", "XamlStylerCui\XamlStylerCui.csproj", "{63711DDE-2464-466F-B374-ABD69EEB5AE1}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BD2A5B6F-0B1C-4B1D-90AF-707F62BB12C0} = {BD2A5B6F-0B1C-4B1D-90AF-707F62BB12C0}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlStyler.Service", "..\XamlStyler\XamlStyler.Service\XamlStyler.Service.csproj", "{BD2A5B6F-0B1C-4B1D-90AF-707F62BB12C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XamlStyler.Service", "XamlStyler\XamlStyler.Service\XamlStyler.Service.csproj", "{BD2A5B6F-0B1C-4B1D-90AF-707F62BB12C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

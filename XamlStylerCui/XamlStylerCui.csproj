@@ -7,8 +7,8 @@
     <ProjectGuid>{63711DDE-2464-466F-B374-ABD69EEB5AE1}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XamlStylerConsole</RootNamespace>
-    <AssemblyName>XamlStylerConsole</AssemblyName>
+    <RootNamespace>XamlStylerCui</RootNamespace>
+    <AssemblyName>XamlStylerCui</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

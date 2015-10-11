@@ -9,7 +9,7 @@ using Mono.Options;
 using XamlStyler.Core;
 using XamlStyler.Core.Options;
 
-namespace XamlStylerConsole
+namespace XamlStylerCui
 {
     class Program
     {
