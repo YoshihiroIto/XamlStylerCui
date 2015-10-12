@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Mono.Options;
 using XamlStyler.Core;
 using XamlStyler.Core.Options;
@@ -107,7 +108,10 @@ namespace XamlStylerCui
             var inputText = File.ReadAllText(inputFilepath);
             var outputText = styler.ManipulateTreeAndFormatInput(inputText);
 
-            return inputText == outputText;
+            var inputLines = inputText.Split('\n').Select(x => x.TrimEnd());
+            var outputLines = outputText.Split('\n').Select(x => x.TrimEnd());
+
+            return inputLines.SequenceEqual(outputLines);
         }
 
         private static void ExecuteStyler(string inputFilepath, string outputFilepath, string optionsFilepath)
@@ -120,9 +124,6 @@ namespace XamlStylerCui
 
             var inputText = File.ReadAllText(inputFilepath);
             var outputText = styler.ManipulateTreeAndFormatInput(inputText);
-
-            // todo:Because there is a blank character is left at the end of the line
-            outputText = styler.ManipulateTreeAndFormatInput(outputText);
 
             if (string.IsNullOrEmpty(outputFilepath))
                 Console.WriteLine(outputText);
