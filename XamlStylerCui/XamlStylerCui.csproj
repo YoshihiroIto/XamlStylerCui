@@ -68,8 +68,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir $(TargetDir)Final
-$(SolutionDir)Externals\ILRepack.exe  /ndebug /out:$(TargetDir)Final\XamlStylerCui.exe $(TargetDir)XamlStylerCui.exe $(TargetDir)YamlDotNet.dll $(TargetDir)XamlStyler.Core.dll
+    <PostBuildEvent>mkdir $(ProjectDir)\bin\Final
+$(SolutionDir)Externals\ILRepack.exe  /ndebug /out:$(ProjectDir)\bin\Final\XamlStylerCui.exe $(TargetDir)XamlStylerCui.exe $(TargetDir)YamlDotNet.dll $(TargetDir)XamlStyler.Core.dll
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
