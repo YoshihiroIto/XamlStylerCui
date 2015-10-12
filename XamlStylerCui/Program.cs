@@ -9,6 +9,8 @@ namespace XamlStylerCui
 {
     internal class Program
     {
+        private static string DefaultOptionFileName { get; } = "XamlStylerCui.yml";
+
         private static int Main(string[] args)
         {
             var inputFilepath = string.Empty;
@@ -46,7 +48,7 @@ namespace XamlStylerCui
 
             if (isGenerateDefaultOptionsFile)
             {
-                GenerateDefaultOptionsFile(outputFilepath);
+                GenerateDefaultOptionsFile();
                 return 0;
             }
 
@@ -72,17 +74,15 @@ namespace XamlStylerCui
             optionSet.WriteOptionDescriptions(Console.Error);
         }
 
-        private static void GenerateDefaultOptionsFile(string outputFilepath)
+        private static void GenerateDefaultOptionsFile()
         {
             using (var tw = new StringWriter())
             {
                 var serializer = new Serializer(SerializationOptions.EmitDefaults);
                 serializer.Serialize(tw, new StylerOptions());
 
-                if (string.IsNullOrEmpty(outputFilepath))
-                    Console.WriteLine(tw.ToString());
-                else
-                    File.WriteAllText(outputFilepath, tw.ToString());
+
+                File.WriteAllText(DefaultOptionFileName, tw.ToString());
             }
         }
 
@@ -119,6 +119,7 @@ namespace XamlStylerCui
 
         private static string FindOptionsFilePath(string inputOptionsFilepath)
         {
+            // current to root
             if (string.IsNullOrEmpty(inputOptionsFilepath) == false)
             {
                 string optionsFilepath = inputOptionsFilepath;
@@ -144,12 +145,21 @@ namespace XamlStylerCui
                 if (File.Exists(optionsFilepath) == false)
                     throw new FileNotFoundException("Options file is not fount.", inputOptionsFilepath);
 
-                    return optionsFilepath;
+                return optionsFilepath;
             }
-            else
+
+            // home directory
             {
-                return string.Empty;
+                var homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+                var optionsFilePath = Path.Combine(homeDir, DefaultOptionFileName);
+
+                if (File.Exists(optionsFilePath))
+                    return optionsFilePath;
             }
+
+            // no options file
+            return string.Empty;
         }
     }
 }
