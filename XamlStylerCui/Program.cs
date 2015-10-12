@@ -93,31 +93,10 @@ namespace XamlStylerCui
 
             StylerOptions options;
             {
-                if (string.IsNullOrEmpty(optionsFilepath) == false)
+                var actualOptionsFilepath = FindOptionsFilePath(optionsFilepath);
+
+                if (string.IsNullOrEmpty(actualOptionsFilepath) == false)
                 {
-                    string actualOptionsFilepath = optionsFilepath;
-                    {
-                        var file = Path.GetFileName(optionsFilepath);
-                        var dir = Path.GetDirectoryName(Path.GetFullPath(optionsFilepath));
-
-                        while (dir != null)
-                        {
-                            actualOptionsFilepath = Path.Combine(dir, file);
-
-                            if (File.Exists(actualOptionsFilepath))
-                                break;
-
-                            var parent = Directory.GetParent(dir);
-                            if (parent == null)
-                                break;
-
-                            dir = parent.FullName;
-                        }
-                    }
-
-                    if (File.Exists(actualOptionsFilepath) == false)
-                        throw new FileNotFoundException("Options file is not fount.", optionsFilepath);
-
                     var optionsText = File.ReadAllText(actualOptionsFilepath);
                     options = (new Deserializer()).Deserialize<StylerOptions>(new StringReader(optionsText));
                 }
@@ -136,6 +115,41 @@ namespace XamlStylerCui
                 Console.WriteLine(outputText);
             else
                 File.WriteAllText(outputFilepath, outputText);
+        }
+
+        private static string FindOptionsFilePath(string inputOptionsFilepath)
+        {
+            if (string.IsNullOrEmpty(inputOptionsFilepath) == false)
+            {
+                string optionsFilepath = inputOptionsFilepath;
+                {
+                    var file = Path.GetFileName(inputOptionsFilepath);
+                    var dir = Path.GetDirectoryName(Path.GetFullPath(inputOptionsFilepath));
+
+                    while (dir != null)
+                    {
+                        optionsFilepath = Path.Combine(dir, file);
+
+                        if (File.Exists(optionsFilepath))
+                            break;
+
+                        var parent = Directory.GetParent(dir);
+                        if (parent == null)
+                            break;
+
+                        dir = parent.FullName;
+                    }
+                }
+
+                if (File.Exists(optionsFilepath) == false)
+                    throw new FileNotFoundException("Options file is not fount.", inputOptionsFilepath);
+
+                    return optionsFilepath;
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
     }
 }
