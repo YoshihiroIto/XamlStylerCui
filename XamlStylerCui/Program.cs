@@ -16,6 +16,7 @@ namespace XamlStylerCui
             var inputFilepath = string.Empty;
             var outputFilepath = string.Empty;
             var optionsFilepath = string.Empty;
+            var isCheckStyling = false;
             var isGenerateDefaultOptionsFile = false;
             var isShowHelp = false;
 
@@ -24,6 +25,7 @@ namespace XamlStylerCui
                 {"i=|input=", "Input file.", v => inputFilepath = v},
                 {"o=|output=", "Output file.", v => outputFilepath = v},
                 {"options=", "Options file.", v => optionsFilepath = v},
+                {"check", "Check Styling.", v => isCheckStyling = v != null},
                 {"gen_default_options", "Generate Default Options file.", v => isGenerateDefaultOptionsFile = v != null},
                 {"h|help", "Show help.", v => isShowHelp = v != null}
             };
@@ -54,6 +56,14 @@ namespace XamlStylerCui
 
             try
             {
+                if (isCheckStyling)
+                {
+                    var isClean = CheckStyling(inputFilepath, optionsFilepath);
+
+                    Console.WriteLine("{0} is {1}.", inputFilepath, isClean ? "clean" : "dirty");
+                    return isClean ? 0 : 1;
+                }
+
                 ExecuteStyler(inputFilepath, outputFilepath, optionsFilepath);
             }
             catch (Exception e)
@@ -86,11 +96,42 @@ namespace XamlStylerCui
             }
         }
 
+        private static bool CheckStyling(string inputFilepath, string optionsFilepath)
+        {
+            if (File.Exists(inputFilepath) == false)
+                throw new FileNotFoundException("Input file is not fount.", inputFilepath);
+
+            var options = MakeOptions(optionsFilepath);
+            var styler = StylerService.CreateInstance(options);
+
+            var inputText = File.ReadAllText(inputFilepath);
+            var outputText = styler.ManipulateTreeAndFormatInput(inputText);
+
+            return inputText == outputText;
+        }
+
         private static void ExecuteStyler(string inputFilepath, string outputFilepath, string optionsFilepath)
         {
             if (File.Exists(inputFilepath) == false)
                 throw new FileNotFoundException("Input file is not fount.", inputFilepath);
 
+            var options = MakeOptions(optionsFilepath);
+            var styler = StylerService.CreateInstance(options);
+
+            var inputText = File.ReadAllText(inputFilepath);
+            var outputText = styler.ManipulateTreeAndFormatInput(inputText);
+
+            // todo:Because there is a blank character is left at the end of the line
+            outputText = styler.ManipulateTreeAndFormatInput(outputText);
+
+            if (string.IsNullOrEmpty(outputFilepath))
+                Console.WriteLine(outputText);
+            else
+                File.WriteAllText(outputFilepath, outputText);
+        }
+
+        private static StylerOptions MakeOptions(string optionsFilepath)
+        {
             StylerOptions options;
             {
                 var actualOptionsFilepath = FindOptionsFilePath(optionsFilepath);
@@ -106,15 +147,7 @@ namespace XamlStylerCui
                 }
             }
 
-            var inputText = File.ReadAllText(inputFilepath);
-
-            var styler = StylerService.CreateInstance(options);
-            var outputText = styler.ManipulateTreeAndFormatInput(inputText);
-
-            if (string.IsNullOrEmpty(outputFilepath))
-                Console.WriteLine(outputText);
-            else
-                File.WriteAllText(outputFilepath, outputText);
+            return options;
         }
 
         private static string FindOptionsFilePath(string inputOptionsFilepath)
