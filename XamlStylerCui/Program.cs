@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Mono.Options;
 using XamlStyler.Core;
 using XamlStyler.Core.Options;
@@ -92,8 +93,7 @@ namespace XamlStylerCui
                 var serializer = new Serializer(SerializationOptions.EmitDefaults);
                 serializer.Serialize(tw, new StylerOptions());
 
-
-                File.WriteAllText(DefaultOptionFileName, tw.ToString());
+                File.WriteAllText(DefaultOptionFileName, tw.ToString(), Encoding.UTF8);
             }
         }
 
@@ -105,7 +105,7 @@ namespace XamlStylerCui
             var options = MakeOptions(optionsFilepath);
             var styler = StylerService.CreateInstance(options);
 
-            var inputText = File.ReadAllText(inputFilepath);
+            var inputText = File.ReadAllText(inputFilepath, Encoding.UTF8);
             var outputText = styler.ManipulateTreeAndFormatInput(inputText);
 
             var inputLines = inputText.Split('\n').Select(x => x.TrimEnd());
@@ -122,13 +122,13 @@ namespace XamlStylerCui
             var options = MakeOptions(optionsFilepath);
             var styler = StylerService.CreateInstance(options);
 
-            var inputText = File.ReadAllText(inputFilepath);
+            var inputText = File.ReadAllText(inputFilepath, Encoding.UTF8);
             var outputText = styler.ManipulateTreeAndFormatInput(inputText);
 
             if (string.IsNullOrEmpty(outputFilepath))
                 Console.WriteLine(outputText);
             else
-                File.WriteAllText(outputFilepath, outputText);
+                File.WriteAllText(outputFilepath, outputText, Encoding.UTF8);
         }
 
         private static StylerOptions MakeOptions(string optionsFilepath)
