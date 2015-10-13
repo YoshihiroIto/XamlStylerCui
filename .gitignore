@@ -2,3 +2,4 @@ XamlStylerCui/bin
 .vs
 packages
 *.user
+XamlStylerCui/obj/
