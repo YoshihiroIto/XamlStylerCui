@@ -126,7 +126,7 @@ namespace XamlStylerCui
             var outputText = styler.ManipulateTreeAndFormatInput(inputText);
 
             if (string.IsNullOrEmpty(outputFilepath))
-                Console.WriteLine(outputText);
+                Console.Write(outputText);
             else
                 File.WriteAllText(outputFilepath, outputText, Encoding.UTF8);
         }
