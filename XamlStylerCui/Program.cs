@@ -72,7 +72,6 @@ namespace XamlStylerCui
             {
                 Console.WriteLine("error:");
                 Console.WriteLine(e.Message);
-                Console.WriteLine("Try `CommandLineOption --help' for more information.");
                 return 1;
             }
 
