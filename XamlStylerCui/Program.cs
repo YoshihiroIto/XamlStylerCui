@@ -35,7 +35,9 @@ namespace XamlStylerCui
             try
             {
                 var extra = optionSet.Parse(args);
-                inputFilepath = extra.FirstOrDefault();
+
+                if (extra.Any())
+                    inputFilepath = extra.FirstOrDefault();
             }
             catch (OptionException e)
             {
