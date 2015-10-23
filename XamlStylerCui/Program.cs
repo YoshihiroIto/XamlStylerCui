@@ -34,7 +34,8 @@ namespace XamlStylerCui
 
             try
             {
-                optionSet.Parse(args);
+                var extra = optionSet.Parse(args);
+                inputFilepath = extra.FirstOrDefault();
             }
             catch (OptionException e)
             {
@@ -42,6 +43,12 @@ namespace XamlStylerCui
                 Console.WriteLine(e.Message);
                 Console.WriteLine("Try `CommandLineOption --help' for more information.");
                 return 1;
+            }
+
+            if (args.Any() == false)
+            {
+                ShowUsage(optionSet);
+                return 0;
             }
 
             if (isShowHelp)
@@ -81,7 +88,6 @@ namespace XamlStylerCui
         private static void ShowUsage(OptionSet optionSet)
         {
             Console.Error.WriteLine("Usage:XamlStylerCui [OPTIONS]");
-            Console.Error.WriteLine();
             optionSet.WriteOptionDescriptions(Console.Error);
         }
 
@@ -98,8 +104,11 @@ namespace XamlStylerCui
 
         private static bool CheckStyling(string inputFilepath, string optionsFilepath)
         {
+            if (string.IsNullOrEmpty(inputFilepath))
+                throw new Exception("Input file is not specified.");
+
             if (File.Exists(inputFilepath) == false)
-                throw new FileNotFoundException("Input file is not fount.", inputFilepath);
+                throw new FileNotFoundException(inputFilepath + " is not found.", inputFilepath);
 
             var options = MakeOptions(optionsFilepath);
             var styler = StylerService.CreateInstance(options);
@@ -115,8 +124,11 @@ namespace XamlStylerCui
 
         private static void ExecuteStyler(string inputFilepath, string outputFilepath, string optionsFilepath)
         {
+            if (string.IsNullOrEmpty(inputFilepath))
+                throw new Exception("Input file is not specified.");
+
             if (File.Exists(inputFilepath) == false)
-                throw new FileNotFoundException("Input file is not fount.", inputFilepath);
+                throw new FileNotFoundException(inputFilepath + " is not fount.", inputFilepath);
 
             var options = MakeOptions(optionsFilepath);
             var styler = StylerService.CreateInstance(options);
@@ -145,9 +157,7 @@ namespace XamlStylerCui
                     options = (new Deserializer()).Deserialize<StylerOptions>(new StringReader(optionsText));
                 }
                 else
-                {
                     options = new StylerOptions();
-                }
             }
 
             return options;
@@ -179,7 +189,8 @@ namespace XamlStylerCui
                 }
 
                 if (File.Exists(optionsFilepath) == false)
-                    throw new FileNotFoundException("Options file is not fount.", inputOptionsFilepath);
+                    throw new FileNotFoundException(inputOptionsFilepath + "\nOptions file is not fount.",
+                        inputOptionsFilepath);
 
                 return optionsFilepath;
             }
