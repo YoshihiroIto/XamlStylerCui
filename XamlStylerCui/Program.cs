@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime;
 using System.Text;
 using Mono.Options;
 using XamlStyler.Core;
@@ -15,6 +17,9 @@ namespace XamlStylerCui
 
         private static int Main(string[] args)
         {
+            ProfileOptimization.SetProfileRoot(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location));
+            ProfileOptimization.StartProfile("XamlStylerCui.StartupProfile");
+
             var inputFilepath = string.Empty;
             var outputFilepath = string.Empty;
             var optionsFilepath = string.Empty;
