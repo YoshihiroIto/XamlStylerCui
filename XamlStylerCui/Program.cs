@@ -161,7 +161,7 @@ namespace XamlStylerCui
                 if (string.IsNullOrEmpty(actualOptionsFilepath) == false)
                 {
                     var optionsText = File.ReadAllText(actualOptionsFilepath);
-                    options = (new Deserializer()).Deserialize<StylerOptions>(new StringReader(optionsText));
+                    options = new Deserializer().Deserialize<StylerOptions>(new StringReader(optionsText));
                 }
                 else
                     options = new StylerOptions();
