@@ -61,15 +61,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XamlStyler\XamlStyler.Service\XamlStyler.Service.csproj">
+    <ProjectReference Include="..\XamlStyler\XamlStyler.Core\XamlStyler.Core.csproj">
       <Project>{bd2a5b6f-0b1c-4b1d-90af-707f62bb12c0}</Project>
-      <Name>XamlStyler.Service</Name>
+      <Name>XamlStyler.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir $(ProjectDir)\bin\Final
-$(SolutionDir)Externals\ILRepack.exe  /ndebug /out:$(ProjectDir)\bin\Final\XamlStylerCui.exe $(TargetDir)XamlStylerCui.exe $(TargetDir)YamlDotNet.dll $(TargetDir)XamlStyler.Core.dll
+$(SolutionDir)Externals\ILRepack.exe  /ndebug /out:$(ProjectDir)\bin\Final\XamlStylerCui.exe $(TargetDir)XamlStylerCui.exe $(TargetDir)YamlDotNet.dll $(TargetDir)XamlStyler.Core.dll $(TargetDir)Irony.dll
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

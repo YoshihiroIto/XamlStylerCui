@@ -5,8 +5,8 @@ using System.Reflection;
 using System.Runtime;
 using System.Text;
 using Mono.Options;
-using XamlStyler.Core;
-using XamlStyler.Core.Options;
+using Xavalon.XamlStyler.Core;
+using Xavalon.XamlStyler.Core.Options;
 using YamlDotNet.Serialization;
 
 namespace XamlStylerCui
@@ -118,10 +118,10 @@ namespace XamlStylerCui
                 throw new FileNotFoundException(inputFilepath + " is not found.", inputFilepath);
 
             var options = MakeOptions(optionsFilepath);
-            var styler = StylerService.CreateInstance(options);
+            var styler = new StylerService(options);
 
             var inputText = File.ReadAllText(inputFilepath, Encoding.UTF8);
-            var outputText = styler.ManipulateTreeAndFormatInput(inputText);
+            var outputText = styler.StyleDocument(inputText);
 
             var inputLines = inputText.Split('\n').Select(x => x.TrimEnd());
             var outputLines = outputText.Split('\n').Select(x => x.TrimEnd());
@@ -138,10 +138,10 @@ namespace XamlStylerCui
                 throw new FileNotFoundException(inputFilepath + " is not fount.", inputFilepath);
 
             var options = MakeOptions(optionsFilepath);
-            var styler = StylerService.CreateInstance(options);
+            var styler = new StylerService(options);
 
             var inputText = File.ReadAllText(inputFilepath, Encoding.UTF8);
-            var outputText = styler.ManipulateTreeAndFormatInput(inputText);
+            var outputText = styler.StyleDocument(inputText);
 
             if (string.IsNullOrEmpty(outputFilepath))
             {
