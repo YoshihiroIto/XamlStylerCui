@@ -41,6 +41,10 @@
       <HintPath>..\packages\Mono.Options.4.4.0.0\lib\net4-client\Mono.Options.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>externals\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -72,7 +76,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir $(ProjectDir)\bin\Final
-$(SolutionDir)Externals\ILRepack.exe  /ndebug /out:$(ProjectDir)\bin\Final\XamlStylerCui.exe $(TargetDir)XamlStylerCui.exe $(TargetDir)YamlDotNet.dll $(TargetDir)XamlStyler.Core.dll $(TargetDir)Irony.dll $(TargetDir)Mono.Options.dll</PostBuildEvent>
+$(SolutionDir)Externals\ILRepack.exe  /ndebug /out:$(ProjectDir)\bin\Final\XamlStylerCui.exe $(TargetDir)XamlStylerCui.exe $(TargetDir)YamlDotNet.dll $(TargetDir)XamlStyler.Core.dll $(TargetDir)Irony.dll $(TargetDir)Mono.Options.dll $(TargetDir)Newtonsoft.Json.dll</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
